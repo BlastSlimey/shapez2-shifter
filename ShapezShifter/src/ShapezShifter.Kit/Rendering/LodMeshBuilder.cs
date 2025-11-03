@@ -93,48 +93,6 @@ namespace ShapezShifter.Kit
             return this;
         }
 
-        public LOD2Mesh BuildLOD2Mesh()
-        {
-            return new LOD2Mesh
-            {
-                LODClose = CreateRef(MeshAt(0)),
-                LODNormal = CreateRef(MeshAt(1))
-            };
-        }
-
-        public LOD3Mesh BuildLod3Mesh()
-        {
-            return new LOD3Mesh
-            {
-                LODClose = CreateRef(MeshAt(0)),
-                LODNormal = CreateRef(MeshAt(1)),
-                LODFar = CreateRef(MeshAt(2))
-            };
-        }
-
-        public LOD4Mesh BuildLod4Mesh()
-        {
-            return new LOD4Mesh
-            {
-                LODClose = CreateRef(MeshAt(0)),
-                LODNormal = CreateRef(MeshAt(1)),
-                LODFar = CreateRef(MeshAt(2)),
-                LODMinimal = CreateRef(MeshAt(3))
-            };
-        }
-
-        public LOD5Mesh BuildLod5Mesh()
-        {
-            return new LOD5Mesh
-            {
-                LODClose = CreateRef(MeshAt(0)),
-                LODNormal = CreateRef(MeshAt(1)),
-                LODFar = CreateRef(MeshAt(2)),
-                LODMinimal = CreateRef(MeshAt(3)),
-                LODOverview = CreateRef(MeshAt(4))
-            };
-        }
-
         public LOD6Mesh BuildLod6Mesh()
         {
             return new LOD6Mesh
@@ -174,10 +132,6 @@ namespace ShapezShifter.Kit
 
     public interface ILodMeshBuilder
     {
-        LOD2Mesh BuildLOD2Mesh();
-        LOD3Mesh BuildLod3Mesh();
-        LOD4Mesh BuildLod4Mesh();
-        LOD5Mesh BuildLod5Mesh();
         LOD6Mesh BuildLod6Mesh();
     }
 
