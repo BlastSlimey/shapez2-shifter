@@ -1,7 +1,7 @@
 using System;
 using ShapezShifter.Hijack;
 
-namespace ShapezShifter.Flow.SaveData
+namespace ShapezShifter.Flow
 {
     public class ModSaveData<T> : ISaveDataRewirer where T : class, new()
     {
