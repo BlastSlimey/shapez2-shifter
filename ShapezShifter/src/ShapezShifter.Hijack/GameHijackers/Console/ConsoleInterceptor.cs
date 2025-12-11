@@ -4,6 +4,7 @@ using Core.Logging;
 using MonoMod.RuntimeDetour;
 using ShapezShifter.SharpDetour;
 
+#nullable enable
 namespace ShapezShifter.Hijack
 {
     internal class ConsoleInterceptor : IDisposable
@@ -25,7 +26,7 @@ namespace ShapezShifter.Hijack
         private void SetupConsoleCommands(GameSessionOrchestrator orchestrator, IGameData gameData)
         {
             IDebugConsole console = orchestrator.DependencyContainer.Resolve<IDebugConsole>();
-            
+
             IEnumerable<IConsoleRewirer> consoleRewirers = 
                 RewirerProvider.RewirersOfType<IConsoleRewirer>();
 
@@ -35,9 +36,7 @@ namespace ShapezShifter.Hijack
             {
                 try
                 {
-                    consoleRewirer.RegisterConsoleCommand(
-                        RegisterCommand,
-                        RegisterCheatCommand);
+                    consoleRewirer.RegisterConsoleCommand(RegisterCommand);
                 }
                 catch (Exception ex)
                 {
@@ -45,16 +44,28 @@ namespace ShapezShifter.Hijack
                 }
             }
 
-            void RegisterCommand(string command, Action<DebugConsole.CommandContext> handler)
+            return;
+
+            void RegisterCommand(string command, Action<DebugConsole.CommandContext> handler, bool isCheat,
+                DebugConsole.ConsoleOption? arg1, DebugConsole.ConsoleOption? arg2)
             {
                 Logger.Info?.Log($"Registering console command: {command}");
-                console.Register(command, handler);
-            }
-
-            void RegisterCheatCommand(string command, Action<DebugConsole.CommandContext> handler)
-            {
-                Logger.Info?.Log($"Registering console cheat command: {command}");
-                console.Register(command, handler, true);
+                if (arg1 != null && arg2 != null)
+                {
+                    console.Register(command, arg1, arg2, handler, isCheat);
+                }
+                else if (arg1 != null && arg2 == null)
+                {
+                    console.Register(command, arg1, handler, isCheat);
+                }
+                else if (arg1 == null && arg2 != null)
+                {
+                    console.Register(command, arg2, handler, isCheat);
+                }
+                else
+                {
+                    console.Register(command, handler, isCheat);
+                }
             }
         }
 

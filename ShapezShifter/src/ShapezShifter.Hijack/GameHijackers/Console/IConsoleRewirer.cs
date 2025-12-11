@@ -1,11 +1,11 @@
 using System;
 
+#nullable enable
 namespace ShapezShifter.Hijack
 {
     public interface IConsoleRewirer : IRewirer
     {
-        void RegisterConsoleCommand(
-            Action<string, Action<DebugConsole.CommandContext>> registerCommand,
-            Action<string, Action<DebugConsole.CommandContext>> registerCheatCommand);
+        void RegisterConsoleCommand(Action<string, Action<DebugConsole.CommandContext>, bool,
+            DebugConsole.ConsoleOption?, DebugConsole.ConsoleOption?> registerCommand);
     }
 }
